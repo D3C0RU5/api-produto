@@ -5,7 +5,7 @@ pipeline {
     stage ('Build Image') {
       steps {
         script {
-          dockerapp = docker.build("fabricioveronez/api-produto:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
+          dockerapp = docker.build("louhf/api-produto:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
         }
       }
     }
@@ -15,7 +15,7 @@ pipeline {
         script {
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
             dockerapp.push('latest')
-            dockerapp.push("latest:${env.BUILD_ID}")
+            dockerapp.push("${env.BUILD_ID}")
           }
         }
       }
